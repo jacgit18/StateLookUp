@@ -5,16 +5,18 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StateLookupDAO {
 
 	public String findByKey(String code) {
 		
 		 File f = getFileFromResources("state-lookup.csv");
+		 	if (mapstate.size() == 0) 
+	        loadHashMap(f);
 
-	        printFile(f);
-
-		return "Not Found";
+		return mapstate.get(code);
 	}
 
 // get file from classpath, resources folder
@@ -31,16 +33,20 @@ public class StateLookupDAO {
 
 	}
 
-	private static void printFile(File file) {
+	
+	private static Map<String, String> mapstate = new HashMap<>();
+	
+	private static void loadHashMap(File file) {
 
 		if (file == null)
 			return;
 
 		try (FileReader reader = new FileReader(file); BufferedReader br = new BufferedReader(reader)) {
 
-			String line;
+			String line = br.readLine();
 			while ((line = br.readLine()) != null) {
-				System.out.println(line);
+				String columns[] = line.split(",");
+				mapstate.put(columns[1], columns[2]);
 			}
 		}
 		catch (Exception e) {

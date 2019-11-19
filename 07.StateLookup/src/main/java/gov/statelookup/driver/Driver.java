@@ -8,15 +8,15 @@ public class Driver {
 
 		
 		StateLookupDAO dao = new StateLookupDAO();
-		String name = dao.findByKey("NY");
-		System.out.println(name);
-		System.out.println("------------------------");
-		name = dao.findByKey("CT");
-		System.out.println(name);
+		
+		String states[] = {"NY","CT","FL","NJ"};
+		
+		for (String state : states) {
 
-		System.out.println("------------------------");
-		name = dao.findByKey("NJ");
-		System.out.println(name);
+			String name = dao.findByKey(state);
+			System.out.println(name);
+		}
+		
 
 	}
 
